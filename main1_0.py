@@ -90,7 +90,7 @@ def start():
         
         
         # Draw the updated tree
-        draw_tree(800, 600, length, angle, canvas, iterations, branch_angle, lengthRatio, tag="updated", first_iter=True,)
+        draw_tree(800, 500, length, angle, canvas, iterations, branch_angle, lengthRatio, tag="updated", first_iter=True,)
         check_match()
 
     def check_match():
@@ -148,7 +148,7 @@ def start():
         global random_params
         random_params = {
             'x': 300,
-            'y': 600,
+            'y': 500,
             'length': randint(80, 180),
             'angle': randint(0, 180),
             'canvas': canvas,
@@ -203,9 +203,9 @@ def start():
     winter_photo = tk.PhotoImage(file="winter1png.png")
     winter_button = tk.Button(win, text="Winter", command= lambda: choose_season(canvas, 'winter'))
 
-    generate_random_tree()
+    # generate_random_tree()
 
-    update_tree()
+    # update_tree()
 
 
 
