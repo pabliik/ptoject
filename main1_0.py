@@ -189,10 +189,7 @@ def start():
     # length_ratio_slider.set(0.7)
     # length_ratio_slider.grid(row=0, column=4, padx=10, pady=10)
 
-    summer_Photo = tk.PhotoImage(file="/Users/pavloasieiev/Desktop/inholland/term2/python2/python_codes/project_codes/photos_season/winter1png.png" )
-    summer_Photo = summer_Photo.subsample(1)
-    canvas.create_image(600,300, image= summer_Photo)
-    # canvas.create_rectangle(0,550,width_win, 605, fill='#696f6f')
+    
 
     generate_random_tree()
 
