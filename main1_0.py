@@ -19,6 +19,17 @@ def update_slider_color(slider, diff, tolerance):
 
 
 def start():
+    def choose_season(canvas, season):
+        seasons = {
+            "winter": winter_photo,
+            "spring": "spring1.png",
+            "summer": "summer1.png",
+            "autumn": "autumn1.png"
+        }
+        canvas.create_image(599, 250, image=seasons[season])
+        generate_random_tree()
+        update_tree()
+    
     def exit_app(window):
         window.destroy()
         
@@ -155,7 +166,7 @@ def start():
     width_win = 1200 
     centrum_window(win, "Matching Game" , width_win, 900)   
     #canvas = tk.Canvas(win, bg='green', width=1000, height=600)
-    canvas = tk.Canvas(win, width=width_win-2, height=600)  # Pale green background bg='#e0f7da'
+    canvas = tk.Canvas(win, width=width_win-2, height=500)  # Pale green background bg='#e0f7da'
     # canvas.create_rectangle(0, 0, width_win - 2, 300, fill="#87CEEB")  # Sky blue background
     # canvas.create_rectangle(0, 600, width_win - 2, 300, fill="#228B22")  # Ground (green)
 
@@ -189,7 +200,8 @@ def start():
     # length_ratio_slider.set(0.7)
     # length_ratio_slider.grid(row=0, column=4, padx=10, pady=10)
 
-    
+    winter_photo = tk.PhotoImage(file="winter1png.png")
+    winter_button = tk.Button(win, text="Winter", command= lambda: choose_season(canvas, 'winter'))
 
     generate_random_tree()
 
@@ -199,6 +211,7 @@ def start():
 
     canvas.pack(padx=1, pady=1)
     ScalesLabel.pack(padx=10, pady=10)
+    winter_button.pack(anchor='nw',padx=10, pady=10)
     win.mainloop()
 
 start()
