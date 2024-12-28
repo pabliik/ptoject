@@ -20,15 +20,17 @@ def update_slider_color(slider, diff, tolerance):
 
 def start():
     def choose_season(canvas, season):
+        canvas.delete('season')
         seasons = {
             "winter": winter_photo,
-            "spring": "spring1.png",
-            "summer": "summer1.png",
+            "spring": spring_photo,
+            "summer": summer_photo,
             "autumn": "autumn1.png"
         }
-        canvas.create_image(599, 250, image=seasons[season])
-        generate_random_tree()
+        canvas.create_image(599, 250, image=seasons[season],tag='season')
         update_tree()
+        generate_random_tree()
+        
     
     def exit_app(window):
         window.destroy()
@@ -92,6 +94,22 @@ def start():
         # Draw the updated tree
         draw_tree(800, 500, length, angle, canvas, iterations, branch_angle, lengthRatio, tag="updated", first_iter=True,)
         check_match()
+    
+    def generate_random_tree():
+        canvas.delete('random')
+        global random_params
+        random_params = {
+            'x': 300,
+            'y': 500,
+            'length': randint(80, 180),
+            'angle': randint(0, 180),
+            'canvas': canvas,
+            'iteration': randint(3, 6),
+            'branch_angle': randint(10, 90),
+            'length_ratio': randint(1, 100) / 100
+        }
+        print(random_params)
+        draw_tree(**random_params, first_iter=True , tag="random" ,)
 
     def check_match():
         # try:
@@ -144,20 +162,7 @@ def start():
         
 
 
-    def generate_random_tree():
-        global random_params
-        random_params = {
-            'x': 300,
-            'y': 500,
-            'length': randint(80, 180),
-            'angle': randint(0, 180),
-            'canvas': canvas,
-            'iteration': randint(3, 6),
-            'branch_angle': randint(10, 90),
-            'length_ratio': randint(1, 100) / 100
-        }
-        print(random_params)
-        draw_tree(**random_params, first_iter=True , tag="random" ,)
+    
 
 
 
@@ -202,16 +207,25 @@ def start():
 
     winter_photo = tk.PhotoImage(file="winter1png.png")
     winter_button = tk.Button(win, text="Winter", command= lambda: choose_season(canvas, 'winter'))
-
+    summer_photo = tk.PhotoImage(file='summer.png')
+    summer_button = tk.Button(win,text="Summer", command=lambda: choose_season(canvas, 'summer'))
+    spring_photo = tk.PhotoImage(file='spring.png')
+    spring_button = tk.Button(win, text='Spring', command= lambda: choose_season(canvas, 'spring'))
     # generate_random_tree()
 
     # update_tree()
 
+    generate_random_tree_button = tk.Button(win, text="Generate random tree", command=generate_random_tree)
+
 
 
     canvas.pack(padx=1, pady=1)
+    canvas.delete('all')
     ScalesLabel.pack(padx=10, pady=10)
     winter_button.pack(anchor='nw',padx=10, pady=10)
+    summer_button.pack(anchor='nw', padx=10,pady=10)
+    spring_button.pack(anchor='nw', padx=10, pady=10)
+    generate_random_tree_button.pack(anchor='nw',padx=10,pady=10)
     win.mainloop()
 
 start()
