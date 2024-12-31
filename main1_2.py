@@ -10,8 +10,8 @@ def choose_season(canvas, season):
     canvas.delete('season')
     seasons = {
         "winter": tk.PhotoImage(file="winter1png.png"),
-        # "spring": spring_photo,
-        # "summer": summer_photo,
+        "spring": tk.PhotoImage(file="spring1.png"),#.subsample(3),
+        "summer": tk.PhotoImage(file="summer_4k.png").subsample(2),
         "autumn": tk.PhotoImage(file="autumn2.png").subsample(2)
     }
     canvas.season_images = seasons  # Keep a reference to avoid garbage collection
@@ -88,7 +88,7 @@ def generate_random_tree(canvas):
         'angle': randint(0, 180),
         'iteration': randint(3, 8),
         'branch_angle': randint(10, 90),
-        'length_ratio': (randint(1, 100) / 100)
+        'length_ratio': (randint(20, 100) / 100)
     }
     print("Random Tree Parameters:", random_params)
     canvas.delete("random")
@@ -184,6 +184,12 @@ def start():
 
     autumn_button = tk.Button(Buttons_Label, text="Autumn", command= lambda: choose_season(canvas, "autumn"))
     autumn_button.grid(row=0, column=3, padx=10, pady=10)
+
+    spring_button = tk.Button(Buttons_Label, text="Spring", command= lambda: choose_season(canvas, "spring"))
+    spring_button.grid(row=0, column=4, padx=10, pady=10)
+
+    summer_button = tk.Button(Buttons_Label, text="Summer", command= lambda: choose_season(canvas, "summer"))
+    summer_button.grid(row=0, column=5, padx=10, pady=10)
 
     Buttons_Label.pack(padx=10, pady=10)
     
