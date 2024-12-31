@@ -6,6 +6,19 @@ import numpy as np
 # random_params = {}
 
 # Function to create sliders
+def choose_season(canvas, season):
+    canvas.delete('season')
+    seasons = {
+        "winter": tk.PhotoImage(file="winter1png.png"),
+        # "spring": spring_photo,
+        # "summer": summer_photo,
+        "autumn": tk.PhotoImage(file="autumn2.png").subsample(2)
+    }
+    canvas.season_images = seasons  # Keep a reference to avoid garbage collection
+    canvas.create_image(599, 250, image=seasons[season], tag='season')
+    update_tree(canvas, sliders)
+    
+
 def create_slider(window, from_value, to_value, label, resolution, command, length, set_value, row, column):
     slider = tk.Scale(
         window, label=label, from_=from_value, to=to_value, orient=tk.HORIZONTAL,
@@ -146,7 +159,8 @@ def start():
     
     canvas = tk.Canvas(win, width=1198, height=500)
     canvas.pack(padx=1, pady=1)
-    
+    controls = tk.LabelFrame(win, text="Controls", font=("Arial", 14), padx=10, pady=10)
+    global sliders
     sliders = {}
     controls = tk.LabelFrame(win, text="Adjust Tree Parameters", font=("Arial", 14), padx=10, pady=10)
     sliders['length'] = create_slider(controls, 50, 200, "Branch Length", 1, lambda e: update_tree(canvas, sliders), 200, 100, 0, 0)
@@ -156,13 +170,22 @@ def start():
     sliders['length_ratio'] = create_slider(controls, 0.1, 1, "Length Ratio", 0.01, lambda e: update_tree(canvas, sliders), 200, 0.7, 0, 4)
     controls.pack(padx=10, pady=10)
     
+    Buttons_Label = tk.LabelFrame(win, text="Control Buttons", font=("Arial", 14), padx=10, pady=10)
     # Button to generate random tree
-    random_tree_button = tk.Button(win, text="Generate Random Tree", command=lambda: generate_random_tree(canvas))
-    random_tree_button.pack(anchor="nw", padx=10, pady=10)
+    random_tree_button = tk.Button(Buttons_Label, text="Generate Random Tree", command=lambda: generate_random_tree(canvas))
+    random_tree_button.grid(row=0, column=0, padx=10, pady=10)
     
     # Button to check match
-    match_button = tk.Button(win, text="Check Match", command=lambda: check_match(sliders))
-    match_button.pack(anchor="nw", padx=10, pady=10)
+    match_button = tk.Button(Buttons_Label, text="Check Match", command= lambda: check_match(sliders))
+    match_button.grid(row=0, column=1, padx=10, pady=10)
+
+    winter_button = tk.Button(Buttons_Label, text="Winter", command=lambda: choose_season(canvas, "winter"))
+    winter_button.grid(row=0, column=2, padx=10, pady=10)
+
+    autumn_button = tk.Button(Buttons_Label, text="Autumn", command= lambda: choose_season(canvas, "autumn"))
+    autumn_button.grid(row=0, column=3, padx=10, pady=10)
+
+    Buttons_Label.pack(padx=10, pady=10)
     
     win.mainloop()
 
