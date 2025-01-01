@@ -67,6 +67,16 @@ def check_match(sliders):
         for slider in sliders.values():
             slider.config(state=tk.DISABLED)
         show_congratulations()
+    else:
+        not_match = tk.Toplevel(win)
+        centrum_window(not_match, "Not Matched", 300, 300)
+
+        not_match_label = tk.Label(not_match, text="Sorry! \n You haven't matched the tree! \n Try again!", font=("Arial", 14))
+        not_match_label.pack(padx=10, pady=10)
+
+        continue_button = tk.Button(not_match, text="Continue", command=not_match.destroy)
+        continue_button.pack(padx=10, pady=10)
+
 
 # Function to update the tree
 def update_tree(canvas, sliders):
@@ -95,28 +105,28 @@ def generate_random_tree(canvas):
     draw_tree(300, 500, canvas, **random_params, tag="random")
 
 # Function to check if user parameters match the random tree
-def check_match(sliders):
-    # global random_params  # Ensure the use of the global variable
-    tolerance = {
-        'length': 2,
-        'angle': 2,
-        'iteration': 0,
-        'branch_angle': 2,
-        'length_ratio': 0.02
-    }
+# def check_match(sliders):
+#     # global random_params  # Ensure the use of the global variable
+#     tolerance = {
+#         'length': 2,
+#         'angle': 2,
+#         'iteration': 0,
+#         'branch_angle': 2,
+#         'length_ratio': 0.02
+#     }
     
-    diff = {
-        'length': abs(random_params['length'] - sliders['length'].get()),
-        'angle': abs(random_params['angle'] - sliders['angle'].get()),
-        'iteration': abs(random_params['iteration'] - sliders['iteration'].get()),
-        'branch_angle': abs(random_params['branch_angle'] - sliders['branch_angle'].get()),
-        'length_ratio': abs(random_params['length_ratio'] - sliders['length_ratio'].get())
-    }
+#     diff = {
+#         'length': abs(random_params['length'] - sliders['length'].get()),
+#         'angle': abs(random_params['angle'] - sliders['angle'].get()),
+#         'iteration': abs(random_params['iteration'] - sliders['iteration'].get()),
+#         'branch_angle': abs(random_params['branch_angle'] - sliders['branch_angle'].get()),
+#         'length_ratio': abs(random_params['length_ratio'] - sliders['length_ratio'].get())
+#     }
 
-    if all(diff[key] <= tolerance[key] for key in tolerance):
-        for slider in sliders.values():
-            slider.config(state=tk.DISABLED)
-        show_congratulations(win)
+#     if all(diff[key] <= tolerance[key] for key in tolerance):
+#         for slider in sliders.values():
+#             slider.config(state=tk.DISABLED)
+#         show_congratulations(win)
 
 # Function to show congratulations window
 def show_congratulations(window):
