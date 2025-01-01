@@ -124,30 +124,6 @@ def generate_random_tree(canvas):
     canvas.delete("random")
     draw_tree(300, 500, canvas, **random_params, tag="random")
 
-# Function to check if user parameters match the random tree
-# def check_match(sliders):
-#     # global random_params  # Ensure the use of the global variable
-#     tolerance = {
-#         'length': 2,
-#         'angle': 2,
-#         'iteration': 0,
-#         'branch_angle': 2,
-#         'length_ratio': 0.02
-#     }
-    
-#     diff = {
-#         'length': abs(random_params['length'] - sliders['length'].get()),
-#         'angle': abs(random_params['angle'] - sliders['angle'].get()),
-#         'iteration': abs(random_params['iteration'] - sliders['iteration'].get()),
-#         'branch_angle': abs(random_params['branch_angle'] - sliders['branch_angle'].get()),
-#         'length_ratio': abs(random_params['length_ratio'] - sliders['length_ratio'].get())
-#     }
-
-#     if all(diff[key] <= tolerance[key] for key in tolerance):
-#         for slider in sliders.values():
-#             slider.config(state=tk.DISABLED)
-#         show_congratulations(win)
-
 # Function to show congratulations window
 def show_congratulations(window):
     congrat_win = tk.Toplevel(window)
