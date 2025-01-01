@@ -5,17 +5,23 @@ import numpy as np
 def progress():
     total_progress = 0
     for key in sliders:
-        if sliders[key].get() > random_params[key]:
-            ratio = (random_params[key]-(sliders[key].get() - random_params[key]))/ random_params[key]
-            if ratio < 0:
-                ratio = 0.01
-        else:
-            ratio =( sliders[key].get() - random_params[key]) / random_params[key]
-        
-        percentage = ratio * 20
+        slider_value = sliders[key].get()
+        target_value = random_params[key]
+
+        # Normalize the difference to a fixed range
+        max_range = sliders[key]['to'] - sliders[key]['from']
+        ratio = 1 - abs(slider_value - target_value) / max_range
+
+        # Ensure the ratio is between 0 and 1
+        ratio = max(0, min(1, ratio))
+
+        # Convert ratio to percentage (each parameter contributes equally)
+        percentage = ratio * (100 / len(sliders))
         total_progress += percentage
 
-    return f"{round(total_progress,2)}%"
+    return f"{round(total_progress, 2)}%"
+
+
 
 
 # Function to create sliders
