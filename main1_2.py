@@ -2,8 +2,21 @@ import tkinter as tk
 from random import randint
 import numpy as np
 
-# Declare random_params as a global variable
-# random_params = {}
+def progress():
+    total_progress = 0
+    for key in sliders:
+        if sliders[key].get() > random_params[key]:
+            ratio = (random_params[key]-(sliders[key].get() - random_params[key]))/ random_params[key]
+            if ratio < 0:
+                ratio = 0.01
+        else:
+            ratio =( sliders[key].get() - random_params[key]) / random_params[key]
+        
+        percentage = ratio * 20
+        total_progress += percentage
+
+    return f"{round(total_progress,2)}%"
+
 
 # Function to create sliders
 def choose_season(canvas, season):
@@ -47,14 +60,15 @@ def draw_tree(x, y, canvas, length, angle, iteration, branch_angle, length_ratio
 # Function to check if user parameters match the random tree
 def check_match(sliders):
     global random_params  # Ensure the use of the global variable
+    global tolerance
     tolerance = {
         'length': 2,
         'angle': 2,
-        'iteration': 0,
+        'iteration': 0.1,
         'branch_angle': 2,
         'length_ratio': 0.02
     }
-    
+    global diff
     diff = {
         'length': abs(random_params['length'] - sliders['length'].get()),
         'angle': abs(random_params['angle'] - sliders['angle'].get()),
@@ -66,12 +80,12 @@ def check_match(sliders):
     if all(diff[key] <= tolerance[key] for key in tolerance):
         for slider in sliders.values():
             slider.config(state=tk.DISABLED)
-        show_congratulations()
+        show_congratulations(win)
     else:
         not_match = tk.Toplevel(win)
         centrum_window(not_match, "Not Matched", 300, 300)
 
-        not_match_label = tk.Label(not_match, text="Sorry! \n You haven't matched the tree! \n Try again!", font=("Arial", 14))
+        not_match_label = tk.Label(not_match, text=f"Sorry! \n You haven't matched the tree! \n Try again! \n The progress is {progress()} ", font=("Arial", 14))
         not_match_label.pack(padx=10, pady=10)
 
         continue_button = tk.Button(not_match, text="Continue", command=not_match.destroy)
